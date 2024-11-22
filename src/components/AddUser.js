@@ -9,11 +9,13 @@ const AddUser = () =>
         handleSubmit,
         formState:{errors},
     }= useForm();
-    const onSumbit = (event) =>
+    const onSumbit = (data) =>
     {
-        event.preventDefault();
+        const userId = Date.now(); 
+        const newUser = { id: userId, ...data };
+        
         const users = JSON.parse(localStorage.getItem("users")) || []; 
-        users.push(data);
+        users.push(newUser);
         localStorage.setItem("users", JSON.stringify(users)); 
         nav('/Userlist/Userdetails');
     }
@@ -33,7 +35,7 @@ const AddUser = () =>
                     {errors.email && <p>{errors.email.message}</p>}
                 </div>
                 <div>
-                <label>Name</label>
+                <label>Age</label>
                 <input {...register('age',{required : 'Age is required'})}/>
                 {errors.name && <p>{errors.name.message}</p>}
                 </div>
